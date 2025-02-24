@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: SEATA_GROUP
+        cluster-name: default
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/seata_order?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+mybatis:
+  mapper-locations: classpath:com/webczw/seata/order/dao/*.xml
+seata:
+  application-id: ${spring.application.name}
+  tx-service-group: default_tx_group
+  service:
+    # 虚拟组和分组的映射
+    vgroup-mapping:
+      default_tx_group: default
+    # 分组和 Seata 服务的映射
+    grouplist:
+      #      default: 172.16.20.220:8091
+      default: 127.0.0.1:8091
+  enabled: true # spring 自动装配
+  enable-auto-data-source-proxy: true # 开启数据源自动代理
+  transport:
+    enable-client-batch-send-request: true #客户端事务消息请求是否批量合并发送,默认true，false单条发送
+  registry:
+    #配置seata的注册中心，告诉 seata client 怎么去访问seata service
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      #seata service 的 application: name
+      application: seata-server
+      #username: nacos
+      #password: nacos
+      group: SEATA_GROUP
+      namespace: 5bf7d3b6-1c2b-4750-85ad-b303e5c6b31f

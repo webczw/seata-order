@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webczw.seata.order.dao.IOrderDao">
+
+    <insert id="addOrder">
+        insert into seata_order_t(order_id,
+                                  order_code,
+                                  order_name,
+                                  order_qty,
+                                  product_id,
+                                  enable_flag,
+                                  created_by,
+                                  creation_date,
+                                  last_updated_by,
+                                  last_update_date)
+        values (#{orderId}, #{orderCode}, #{orderName}, #{orderQty}, #{productId}, 'Y', #{createdBy}, now(),
+                #{lastUpdatedBy}, now())
+
+    </insert>
+</mapper>
